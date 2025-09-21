@@ -1,0 +1,6 @@
+name = "ram"
+compatibility_date = "2025-09-21"
+
+[site]
+bucket = "./dist/ram"
+entry-point = "workers-site"
