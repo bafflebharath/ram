@@ -3,8 +3,6 @@
     "target": "https://freeapi.miniprojectideas.com",
     "secure": false,
     "changeOrigin": true,
-    "pathRewrite": {
-      "^/api": ""
-    }
+    "logLevel": "debug"
   }
 }

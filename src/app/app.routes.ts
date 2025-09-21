@@ -5,6 +5,7 @@ import { ChargeBack } from './pages/chargeBack/charge-back/charge-back';
 import { OmcbkCaseDetail } from './pages/chargeBack/omcbk-case-detail/omcbk-case-detail';
 import { OmcbkCaseList } from './pages/chargeBack/omcbk-case-list/omcbk-case-list';
 import { Dashboard } from './pages/dashboard/dashboard';
+import { MerchantList } from './pages/merchant/merchant-list/merchant-list';
 
 export const routes: Routes = [
     {
@@ -27,14 +28,23 @@ export const routes: Routes = [
                         component: ChargeBack,
                         children: [
                             {
-                                path: 'chargeBack/omcbk-case-list',
+                                path: 'omcbk-case-list',
                                 component: OmcbkCaseList,
                                 children: [
                                     {
-                                        path: 'chargeBack/omcbk-case-detail',
+                                        path: 'omcbk-case-detail',
                                         component: OmcbkCaseDetail,
                                     }
                                 ]
+                            }
+                        ]
+                    },
+                    {
+                        path: 'merchant',
+                        children: [
+                            {
+                                path: 'merchant-list',
+                                component: MerchantList
                             }
                         ]
                     }

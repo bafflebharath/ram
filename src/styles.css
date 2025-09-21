@@ -2,3 +2,12 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mat-mdc-menu-panel {
+  background-color: #ffffff !important; /* or any solid color */
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.3); /* optional for depth */
+}
+
+/* Optional: change menu items hover color */
+.mat-mdc-menu-item:hover {
+  background-color: #f0f0f0 !important;
+}

@@ -22,7 +22,7 @@ export class Login {
       Password: this.Password,
       ContactNo: this.EmailId
     };
-    this.http.post('/api/api/EventBooking/Login', payload)
+    this.http.post('/api/EventBooking/Login', payload)
       .subscribe({
         next: () => this.router.navigate(['/layout/dashboard']),
         error: () => alert('Login failed')

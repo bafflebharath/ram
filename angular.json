@@ -55,6 +55,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "ram:build:production"
@@ -63,7 +66,7 @@
               "buildTarget": "ram:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
