@@ -27,7 +27,12 @@
             "styles": [
               "bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
-            ]
+            ],
+            "outputPath": "dist/ram",
+            "index": "src/index.html",
+            "inlineStyleLanguage": "css",
+            "scripts": [],
+            "baseHref": "/"
           },
           "configurations": {
             "production": {
@@ -66,7 +71,7 @@
               "buildTarget": "ram:build:development"
             }
           },
-          "defaultConfiguration": "development",
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
