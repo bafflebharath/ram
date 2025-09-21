@@ -1,7 +1,7 @@
-name = "my-angular-app"
+name = "ram"
 compatibility_date = "2025-09-21"
 
 main = "index.js"   # <-- required by Wrangler, even if unused
 
 [site]
-bucket = "./dist/my-angular-app"
+bucket = "./dist/ram"
