@@ -1,0 +1,15 @@
+.mat-toolbar-row,
+.mat-toolbar-single-row {
+  height: auto !important; /* or set to your desired height, e.g. 48px */
+  min-height: 0 !important;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: coral;
+  font-size: 14px;
+}
+.mat-menu-panel {
+  transform: none !important;
+}
+.mat-mdc-menu-content {
+  padding: 0 !important;
+}
