@@ -6,6 +6,7 @@ import { OmcbkCaseDetail } from './pages/chargeBack/omcbk-case-detail/omcbk-case
 import { OmcbkCaseList } from './pages/chargeBack/omcbk-case-list/omcbk-case-list';
 import { Dashboard } from './pages/dashboard/dashboard';
 import { MerchantList } from './pages/merchant/merchant-list/merchant-list';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,7 @@ export const routes: Routes = [
     {
         path: 'layout',
         component: Layout,
+        canActivate: [AuthGuard],
         children: [
             {
                 path: 'dashboard',

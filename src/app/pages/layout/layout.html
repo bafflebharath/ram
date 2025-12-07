@@ -1,35 +1,85 @@
 <div class="container-fluid p-0">
-  <mat-toolbar color="primary" class="d-flex flex-wrap justify-content-between align-items-center">
-    <div class="d-block d-md-none">
-      <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
-        <mat-icon>menu</mat-icon>
+
+  <!-- TOP TOOLBAR: Logo + Logout -->
+  <mat-toolbar color="primary" class="d-flex justify-content-between align-items-center px-3">
+    <!-- Logo -->
+    <div class="d-flex align-items-center">
+      <mat-icon>account_balance_wallet</mat-icon>
+      <span class="ms-2">MyCompany</span>
+    </div>
+
+    <!-- Logout -->
+    <div>
+      <!-- <button mat-icon-button matTooltip="Logout" (click)="logout()"></button> -->
+      <button mat-icon-button (click)="logout()">
+        <mat-icon>logout</mat-icon>
       </button>
     </div>
-    <div class="d-none d-md-flex">
-      <button mat-button [matMenuTriggerFor]="chargeBackMenu">ChargeBack</button>
-      <button mat-button [matMenuTriggerFor]="transactionMenu">Transaction Handling</button>
-      <button mat-button [matMenuTriggerFor]="merchantMenu">Merchant Administration</button>
-      <button mat-button [matMenuTriggerFor]="usersMenu">Users</button>
-    </div>
   </mat-toolbar>
+
+  <!-- SECOND TOOLBAR: Tabs + Institution Selector -->
+  <mat-toolbar color="accent" class="d-flex justify-content-between align-items-center px-3">
+    
+    <!-- Left: Tabs -->
+    <div class="d-flex align-items-center">
+      <!-- Mobile Menu Button -->
+      <div class="d-block d-md-none me-2">
+        <button mat-icon-button [matMenuTriggerFor]="mobileMenu">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+
+      <!-- Desktop Tabs -->
+      <div class="d-none d-md-flex">
+        <button mat-button [matMenuTriggerFor]="chargeBackMenu">ChargeBack</button>
+        <button mat-button [matMenuTriggerFor]="transactionMenu">Transaction Handling</button>
+        <button mat-button [matMenuTriggerFor]="merchantMenu">Merchant Administration</button>
+        <button mat-button [matMenuTriggerFor]="usersMenu">Users</button>
+      </div>
+    </div>
+
+    <!-- Right: Institution Selector -->
+    <div class="d-flex align-items-center">
+      <!-- <button mat-icon-button [matMenuTriggerFor]="institutionMenu" matTooltip="Select Institution"> -->
+      <button mat-icon-button [matMenuTriggerFor]="institutionMenu">
+        <mat-icon>account_balance</mat-icon>
+      </button>
+    </div>
+
+  </mat-toolbar>
+
+  <!-- Institution Dropdown -->
+  <mat-menu #institutionMenu="matMenu">
+    <ng-container *ngFor="let inst of [1,2,3,4,5,6,7,8,9,10]">
+      <button mat-menu-item (click)="selectInstitution(inst)">
+        Institution {{ inst }}
+      </button>
+    </ng-container>
+  </mat-menu>
 
   <!-- Desktop Menus -->
   <mat-menu #chargeBackMenu="matMenu">
     <button mat-menu-item [matMenuTriggerFor]="omcbkCaseListMenu">OMCBK Case List</button>
     <button mat-menu-item>Presentment Reversal</button>
   </mat-menu>
+
   <mat-menu #omcbkCaseListMenu="matMenu">
-    <button mat-menu-item (click)="navigate('/layout/dashboard/chargeBack/charge-back/omcbk-case-list/omcbk-case-detail')">OMCBK Case Details</button>
+    <button mat-menu-item (click)="navigate('/layout/dashboard/chargeBack/charge-back/omcbk-case-list/omcbk-case-detail')">
+      OMCBK Case Details
+    </button>
     <button mat-menu-item>OMCBK Case Merchant</button>
   </mat-menu>
+
   <mat-menu #transactionMenu="matMenu">
     <button mat-menu-item>Transaction Summary</button>
     <button mat-menu-item>Transaction Details</button>
   </mat-menu>
+
   <mat-menu #merchantMenu="matMenu">
     <button mat-menu-item (click)="navigate('/layout/dashboard/merchant/merchant-list')">Merchant List</button>
     <button mat-menu-item>Merchant Settings</button>
   </mat-menu>
+
   <mat-menu #usersMenu="matMenu">
     <button mat-menu-item>User List</button>
     <button mat-menu-item (click)="navigate('/layout/dashboard/users/roles')">User Roles</button>
@@ -43,5 +93,6 @@
     <button mat-menu-item [matMenuTriggerFor]="usersMenu">Users</button>
   </mat-menu>
 
+  <!-- Child Pages -->
   <router-outlet></router-outlet>
 </div>

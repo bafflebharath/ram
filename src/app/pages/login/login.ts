@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,18 +14,32 @@ export class Login {
   EmailId = '';
   Password = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  // constructor(private http: HttpClient, private router: Router) {}
+
+  // onSubmit() {
+  //   const payload = {
+  //     Password: this.Password,
+  //     ContactNo: this.EmailId
+  //   };
+  //   this.http.post('/api/EventBooking/Login', payload)
+  //     .subscribe({
+  //       next: () => this.router.navigate(['/layout/dashboard']),
+  //       error: () => alert('Login failed')
+  //     });
+  // }
+
+  constructor(private router: Router) {}
 
   onSubmit() {
-    const payload = {
-      Password: this.Password,
-      ContactNo: this.EmailId
-    };
-    this.http.post('/api/EventBooking/Login', payload)
-      .subscribe({
-        next: () => this.router.navigate(['/layout/dashboard']),
-        error: () => alert('Login failed')
-      });
+    if (this.EmailId === 'admin' && this.Password === 'admin') {
+      // store a flag (optional)
+      localStorage.setItem('isLoggedIn', 'true');
+
+      // redirect to layout/dashboard
+      this.router.navigate(['/layout/dashboard']);
+      return;
+    }
+    alert('Invalid username or password');
   }
   
 }
