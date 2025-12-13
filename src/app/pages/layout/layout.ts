@@ -7,6 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { InstitutionService } from '../../services/institutionService/institution-service';
 
 @Component({
   selector: 'app-layout',
@@ -26,15 +27,25 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class Layout {
   selectedInstitution: number | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private instService: InstitutionService) {
+    this.selectedInstitution = this.instService.getSelectedInstitution();
+    this.instService.selectedInstitution$.subscribe(inst => {
+      this.selectedInstitution = inst;
+      // keep query param updated so child pages can pick it up
+      this.router.navigate([], { queryParams: { inst }, queryParamsHandling: 'merge' });
+    });
+  }
 
   navigate(path: string) {
-    this.router.navigate([path]);
+    // append selected institution as query param
+    const inst = this.selectedInstitution ?? this.instService.getSelectedInstitution();
+    this.router.navigate([path], { queryParams: { inst } });
   }
 
   selectInstitution(inst: number) {
     console.log('Selected institution:', inst);
-    this.selectedInstitution = inst;
+    this.instService.setSelectedInstitution(inst);
+    this.router.navigate([], { queryParams: { inst }, queryParamsHandling: 'merge' });
   }
 
   logout() {

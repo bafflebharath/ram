@@ -6,6 +6,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { InstitutionService } from '../../../services/institutionService/institution-service';
+import { ActivatedRoute } from '@angular/router';
+
+export interface Merchant {
+  id: number;
+  name: string;
+  createdDate: Date;
+  status: string;
+  institution: number; // new
+}
 
 @Component({
   selector: 'app-merchant-list',
@@ -22,6 +32,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './merchant-list.html',
   styleUrl: './merchant-list.css'
 })
+
 export class MerchantList {
   displayedColumns: string[] = [ 'actions', 'id', 'name', 'createdDate', 'status'];
 
@@ -39,35 +50,57 @@ export class MerchantList {
   pageIndex = 0;
   length = 0;
 
-  constructor() {
+  currentInstitution = 1;
+
+  constructor(private route: ActivatedRoute, private instService: InstitutionService) {
     this.generateMockMerchants();
-    this.applyFilters();
+
+    this.route.queryParams.subscribe(params => {
+      const paramInst = Number(params['inst']);
+      if (paramInst) {
+        this.currentInstitution = paramInst;
+        this.instService.setSelectedInstitution(paramInst);
+      } else {
+        this.currentInstitution = this.instService.getSelectedInstitution();
+      }
+      this.applyFilters();
+    });
+
+    this.instService.selectedInstitution$.subscribe(inst => {
+      if (inst && inst !== this.currentInstitution) {
+        this.currentInstitution = inst;
+        this.applyFilters();
+      }
+    });
   }
 
   generateMockMerchants() {
     const statuses = ['Active', 'Inactive', 'Pending'];
+    this.merchants = [];
     for (let i = 1; i <= 100; i++) {
       this.merchants.push({
         id: i,
         name: `Merchant ${i}`,
         createdDate: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1),
-        status: statuses[Math.floor(Math.random() * statuses.length)]
+        status: statuses[Math.floor(Math.random() * statuses.length)],
+        institution: (i % 10) + 1
       });
     }
+    this.applyFilters();
   }
 
   applyFilters() {
     this.filteredMerchants = this.merchants.filter(m => {
       const matchName = !this.nameFilter || m.name.toLowerCase().includes(this.nameFilter.toLowerCase());
-
       const matchDate =
         (!this.fromDate || new Date(m.createdDate) >= new Date(this.fromDate)) &&
         (!this.toDate || new Date(m.createdDate) <= new Date(this.toDate));
-
-      return matchName && matchDate;
+      const matchInst = !this.currentInstitution || m.institution === this.currentInstitution;
+      return matchName && matchDate && matchInst;
     });
 
     this.length = this.filteredMerchants.length;
+    this.pageIndex = 0;
     this.updatePagedData();
   }
 

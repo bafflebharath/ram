@@ -1,4 +1,4 @@
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 p-md-2">
 
   <!-- TOP TOOLBAR: Logo + Logout -->
   <mat-toolbar color="primary" class="d-flex justify-content-between align-items-center px-3">
@@ -43,6 +43,8 @@
       <!-- <button mat-icon-button [matMenuTriggerFor]="institutionMenu" matTooltip="Select Institution"> -->
       <button mat-icon-button [matMenuTriggerFor]="institutionMenu">
         <mat-icon>account_balance</mat-icon>
+          <!-- show current inst -->
+          <span class="ms-1">{{ selectedInstitution }}</span>
       </button>
     </div>
 

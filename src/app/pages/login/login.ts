@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { InstitutionService } from '../../services/institutionService/institution-service';
 
 @Component({
   selector: 'app-login',
@@ -28,15 +29,16 @@ export class Login {
   //     });
   // }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private instService: InstitutionService) {}
 
   onSubmit() {
     if (this.EmailId === 'admin' && this.Password === 'admin') {
       // store a flag (optional)
       localStorage.setItem('isLoggedIn', 'true');
-
+      // default to institution 1
+      this.instService.setSelectedInstitution(1);
       // redirect to layout/dashboard
-      this.router.navigate(['/layout/dashboard']);
+      this.router.navigate(['/layout/dashboard'], { queryParams: { inst: 1 }});
       return;
     }
     alert('Invalid username or password');

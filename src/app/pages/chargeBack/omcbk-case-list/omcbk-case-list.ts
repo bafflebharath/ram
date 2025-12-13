@@ -5,6 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
+import { InstitutionService } from '../../../services/institutionService/institution-service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-omcbk-case-list',
@@ -14,6 +16,32 @@ import { MatRadioModule } from '@angular/material/radio';
 })
 
 export class OmcbkCaseList {
+
+  currentInstitution = 1;
+
+  constructor(private route: ActivatedRoute, private instService: InstitutionService) {
+    this.currentInstitution = this.instService.getSelectedInstitution();
+    this.instService.selectedInstitution$.subscribe(inst => {
+      if (inst !== this.currentInstitution) {
+        this.currentInstitution = inst;
+        this.onInstitutionChange();
+      }
+    });
+    this.route.queryParams.subscribe(params => {
+      const val = Number(params['inst']);
+      if (val) {
+        this.currentInstitution = val;
+        this.instService.setSelectedInstitution(val);
+        this.onInstitutionChange();
+      }
+    });
+  }
+
+  onInstitutionChange() {
+    // demo: choose different dataset depending on inst
+    this.dataSource = (this.currentInstitution % 2 === 1) ? this.set1 : this.set2;
+  }
+
   selectedSet = 'set1';
   displayedColumns: string[] = ['actions', 'position', 'name', 'weight', 'symbol'];
   set1: PeriodicElement[] = ELEMENT_DATA_1;
